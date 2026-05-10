@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma"
 import { PostCard } from "@/components/post-card"
+import { Avatar } from "@/components/avatar"
 import { Mail } from "lucide-react"
 import Link from "next/link"
 
@@ -55,16 +56,7 @@ export default async function HomePage() {
     <div className="max-w-6xl mx-auto px-4 py-8">
       {/* 个人资料区域 */}
       <section className="flex flex-col items-center text-center mb-12">
-        <div className="w-28 h-28 rounded-full overflow-hidden bg-muted mb-4 ring-2 ring-border">
-          <img
-            src="/avatar.jpg"
-            alt="avatar"
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none"
-            }}
-          />
-        </div>
+        <Avatar />
         <h1 className="text-2xl font-bold">马振宇</h1>
         <p className="text-muted-foreground mt-1">前运维 · 全栈学习中</p>
         <div className="flex items-center gap-4 mt-4">
