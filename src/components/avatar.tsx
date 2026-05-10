@@ -8,7 +8,7 @@ export function Avatar() {
   if (hidden) return null
 
   return (
-    <div className="w-28 h-28 rounded-full overflow-hidden bg-muted mb-4 ring-2 ring-border">
+    <div className="w-36 h-36 rounded-full overflow-hidden bg-muted ring-2 ring-border">
       <img
         src="/avatar.jpg"
         alt="avatar"
