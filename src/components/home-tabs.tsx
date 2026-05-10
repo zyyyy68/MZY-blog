@@ -53,7 +53,7 @@ export function HomeTabs({ posts, activeTab }: { posts: Post[]; activeTab: strin
         <section className="flex flex-col items-center text-center min-h-[calc(100vh-8rem)] justify-center">
           <Avatar />
           <h1 className="text-4xl font-bold mt-6">马振宇</h1>
-          <p className="text-lg text-muted-foreground mt-2">前运维 · 全栈学习中</p>
+          <p className="text-lg text-muted-foreground mt-2">珍贵的东西要往心里看</p>
           <div className="flex items-center gap-5 mt-6">
             {contacts.map((c) => {
               const Icon = c.icon
