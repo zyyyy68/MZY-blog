@@ -3,9 +3,10 @@ import { prisma } from "@/lib/prisma"
 
 export async function GET(
   _request: Request,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const post = await prisma.post.findUnique({ where: { slug: params.slug } })
+  const { slug } = await params
+  const post = await prisma.post.findUnique({ where: { slug } })
   if (!post) {
     return NextResponse.json({ error: "Not found" }, { status: 404 })
   }
@@ -26,9 +27,10 @@ export async function GET(
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
-  const post = await prisma.post.findUnique({ where: { slug: params.slug } })
+  const { slug } = await params
+  const post = await prisma.post.findUnique({ where: { slug } })
   if (!post) {
     return NextResponse.json({ error: "Not found" }, { status: 404 })
   }
