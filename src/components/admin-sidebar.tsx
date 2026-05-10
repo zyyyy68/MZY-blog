@@ -4,12 +4,13 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
 import { Button } from "@/components/ui/button"
-import { LayoutDashboard, FileText, MessageSquare, LogOut } from "lucide-react"
+import { LayoutDashboard, FileText, MessageSquare, Settings, LogOut } from "lucide-react"
 
 const navItems = [
   { href: "/admin", label: "仪表盘", icon: LayoutDashboard },
   { href: "/admin/posts", label: "文章管理", icon: FileText },
   { href: "/admin/comments", label: "评论管理", icon: MessageSquare },
+  { href: "/admin/settings", label: "账号设置", icon: Settings },
 ]
 
 export function AdminSidebar() {

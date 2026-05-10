@@ -5,8 +5,14 @@ import { getToken } from "next-auth/jwt"
 export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname
 
-  // Allow login page
-  if (path === "/admin/login") {
+  // Allow login and password reset pages and APIs
+  if (
+    path === "/admin/login" ||
+    path === "/admin/forgot-password" ||
+    path === "/admin/reset-password" ||
+    path === "/api/admin/forgot-password" ||
+    path === "/api/admin/reset-password"
+  ) {
     return NextResponse.next()
   }
 

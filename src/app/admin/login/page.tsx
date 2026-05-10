@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -56,6 +57,11 @@ export default function LoginPage() {
             <Button type="submit" className="w-full">
               登录
             </Button>
+            <div className="text-center text-sm">
+              <Link href="/admin/forgot-password" className="text-muted-foreground hover:text-foreground">
+                忘记密码？
+              </Link>
+            </div>
           </form>
         </CardContent>
       </Card>
