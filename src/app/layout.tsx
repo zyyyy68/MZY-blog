@@ -5,7 +5,7 @@ import { Navbar } from "@/components/navbar";
 import SessionProvider from "@/components/session-provider";
 
 export const metadata: Metadata = {
-  title: "My Blog",
+  title: "MZY Blog",
   description: "A personal blog built with Next.js",
 };
 
