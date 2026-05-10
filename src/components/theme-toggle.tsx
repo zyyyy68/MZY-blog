@@ -11,15 +11,18 @@ export function ThemeToggle() {
 
   useEffect(() => setMounted(true), [])
 
-  if (!mounted) return <div className="w-9 h-9" />
-
   return (
     <Button
       variant="ghost"
       size="icon"
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      aria-label="切换主题"
     >
-      {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {mounted ? (
+        theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />
+      ) : (
+        <div className="h-5 w-5 rounded bg-muted animate-pulse" />
+      )}
     </Button>
   )
 }
