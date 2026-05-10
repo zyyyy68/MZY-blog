@@ -70,13 +70,11 @@ export function HomeTabs({ posts, activeTab }: { posts: Post[]; activeTab: strin
           <div className="flex items-center gap-5 mt-6">
             {contacts.map((c) => {
               const Icon = c.icon
+              const cls = "text-muted-foreground hover:text-foreground transition-colors inline-flex items-center justify-center w-5 h-5"
               if (c.onClick) {
                 return (
-                  <div key={c.label} className="relative group">
-                    <button
-                      onClick={c.onClick}
-                      className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                    >
+                  <div key={c.label} className="relative group inline-flex">
+                    <button onClick={c.onClick} className={cls + " cursor-pointer"}>
                       <Icon className="w-5 h-5" />
                     </button>
                     <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 hidden group-hover:block z-50">
@@ -91,14 +89,7 @@ export function HomeTabs({ posts, activeTab }: { posts: Post[]; activeTab: strin
                 )
               }
               return (
-                <Link
-                  key={c.label}
-                  href={c.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  title={c.label}
-                >
+                <Link key={c.label} href={c.href} target="_blank" rel="noopener noreferrer" className={cls} title={c.label}>
                   <Icon className="w-5 h-5" />
                 </Link>
               )
