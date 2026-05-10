@@ -72,14 +72,20 @@ export function HomeTabs({ posts, activeTab }: { posts: Post[]; activeTab: strin
               const Icon = c.icon
               if (c.onClick) {
                 return (
-                  <button
-                    key={c.label}
-                    onClick={c.onClick}
-                    className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                    title="点击复制微信号"
-                  >
-                    <Icon className="w-5 h-5" />
-                  </button>
+                  <div key={c.label} className="relative group">
+                    <button
+                      onClick={c.onClick}
+                      className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                    >
+                      <Icon className="w-5 h-5" />
+                    </button>
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block z-50">
+                      <div className="bg-background rounded-lg shadow-lg ring-1 ring-border p-2">
+                        <img src="/wechat-qr.jpg" alt="微信二维码" className="w-32 h-32 object-cover rounded" />
+                        <p className="text-xs text-center text-muted-foreground mt-1 whitespace-nowrap">扫码加微信</p>
+                      </div>
+                    </div>
+                  </div>
                 )
               }
               return (
