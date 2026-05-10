@@ -79,7 +79,7 @@ export function HomeTabs({ posts, activeTab }: { posts: Post[]; activeTab: strin
                     >
                       <Icon className="w-5 h-5" />
                     </button>
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 hidden group-hover:block z-50">
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 hidden group-hover:block z-50">
                       <div className="bg-background rounded-lg shadow-lg ring-1 ring-border p-2">
                         <div className="w-32 aspect-square overflow-hidden rounded">
                           <img src="/wechat-qr.jpg" alt="微信二维码" className="w-full h-full object-cover" />
