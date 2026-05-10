@@ -3,7 +3,13 @@ import { HomeTabs } from "@/components/home-tabs"
 
 export const dynamic = "force-dynamic"
 
-export default async function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ tab?: string }>
+}) {
+  const { tab } = await searchParams
+  const activeTab = tab || "about"
   const posts = await prisma.post.findMany({
     where: { published: true },
     select: {
@@ -30,5 +36,5 @@ export default async function HomePage() {
     commentCount: post._count.comments,
   }))
 
-  return <HomeTabs posts={serialized} />
+  return <HomeTabs posts={serialized} activeTab={activeTab} />
 }

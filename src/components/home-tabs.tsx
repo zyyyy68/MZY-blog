@@ -1,6 +1,5 @@
 "use client"
 
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { PostCard } from "@/components/post-card"
 import { Avatar } from "@/components/avatar"
 import { Mail } from "lucide-react"
@@ -45,76 +44,63 @@ function groupByMonth(posts: Post[]) {
   return groups
 }
 
-export function HomeTabs({ posts }: { posts: Post[] }) {
+export function HomeTabs({ posts, activeTab }: { posts: Post[]; activeTab: string }) {
   const grouped = groupByMonth(posts)
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <Tabs defaultValue="about">
-        <div className="flex justify-center mb-8">
-          <TabsList>
-            <TabsTrigger value="about">关于</TabsTrigger>
-            <TabsTrigger value="posts">文章</TabsTrigger>
-          </TabsList>
+      {activeTab === "about" ? (
+        <section className="flex flex-col items-center text-center">
+          <Avatar />
+          <h1 className="text-2xl font-bold mt-4">马振宇</h1>
+          <p className="text-muted-foreground mt-1">前运维 · 全栈学习中</p>
+          <div className="flex items-center gap-4 mt-4">
+            {contacts.map((c) => {
+              const Icon = c.icon
+              return (
+                <Link
+                  key={c.label}
+                  href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  title={c.label}
+                >
+                  <Icon className="w-5 h-5" />
+                </Link>
+              )
+            })}
+          </div>
+        </section>
+      ) : posts.length === 0 ? (
+        <p className="text-muted-foreground text-center py-16">
+          还没有文章，敬请期待
+        </p>
+      ) : (
+        <div className="space-y-10">
+          {Object.entries(grouped).map(([month, monthPosts]) => (
+            <section key={month}>
+              <h2 className="text-xl font-semibold mb-4 text-muted-foreground">
+                {monthLabel(month)}
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {monthPosts.map((post) => (
+                  <PostCard
+                    key={post.id}
+                    title={post.title}
+                    slug={post.slug}
+                    excerpt={post.excerpt}
+                    coverImage={post.coverImage}
+                    tags={post.tags}
+                    createdAt={post.createdAt}
+                    commentCount={post.commentCount}
+                  />
+                ))}
+              </div>
+            </section>
+          ))}
         </div>
-
-        <TabsContent value="about">
-          <section className="flex flex-col items-center text-center">
-            <Avatar />
-            <h1 className="text-2xl font-bold mt-4">马振宇</h1>
-            <p className="text-muted-foreground mt-1">前运维 · 全栈学习中</p>
-            <div className="flex items-center gap-4 mt-4">
-              {contacts.map((c) => {
-                const Icon = c.icon
-                return (
-                  <Link
-                    key={c.label}
-                    href={c.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-foreground transition-colors"
-                    title={c.label}
-                  >
-                    <Icon className="w-5 h-5" />
-                  </Link>
-                )
-              })}
-            </div>
-          </section>
-        </TabsContent>
-
-        <TabsContent value="posts">
-          {posts.length === 0 ? (
-            <p className="text-muted-foreground text-center py-16">
-              还没有文章，敬请期待
-            </p>
-          ) : (
-            <div className="space-y-10">
-              {Object.entries(grouped).map(([month, monthPosts]) => (
-                <section key={month}>
-                  <h2 className="text-xl font-semibold mb-4 text-muted-foreground">
-                    {monthLabel(month)}
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {monthPosts.map((post) => (
-                      <PostCard
-                        key={post.id}
-                        title={post.title}
-                        slug={post.slug}
-                        excerpt={post.excerpt}
-                        coverImage={post.coverImage}
-                        tags={post.tags}
-                        createdAt={post.createdAt}
-                        commentCount={post.commentCount}
-                      />
-                    ))}
-                  </div>
-                </section>
-              ))}
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
+      )}
     </div>
   )
 }
