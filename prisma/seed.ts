@@ -8,21 +8,19 @@ const adapter = new PrismaLibSql({
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
-  const password = await hash("admin123", 12)
+  const password = await hash("Mzy0368.", 12)
 
   const admin = await prisma.user.upsert({
-    where: { email: "admin@blog.com" },
+    where: { email: "210701544@qq.com" },
     update: {},
     create: {
-      email: "admin@blog.com",
+      email: "210701544@qq.com",
       password,
-      name: "Admin",
+      name: "Mzyyyy",
     },
   })
 
   console.log("Admin user created:", admin.email)
-  console.log("Default password: admin123")
-  console.log("CHANGE THIS AFTER FIRST LOGIN!")
 }
 
 main()
