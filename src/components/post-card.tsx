@@ -25,7 +25,7 @@ export function PostCard({
 
   return (
     <Link href={`/posts/${slug}`}>
-      <Card className="h-full hover:shadow-lg transition-shadow">
+      <Card className="h-full flex flex-col hover:shadow-lg transition-shadow">
         {coverImage && (
           <div className="aspect-video overflow-hidden rounded-t-lg">
             <img
@@ -35,19 +35,19 @@ export function PostCard({
             />
           </div>
         )}
-        <CardContent className="p-4">
+        <CardContent className="p-4 flex-1">
           <h2 className="text-lg font-semibold line-clamp-2 mb-2">{title}</h2>
           <p className="text-sm text-muted-foreground line-clamp-3">
             {excerpt}
           </p>
         </CardContent>
-        <CardFooter className="px-4 pb-4 flex items-center justify-between text-xs text-muted-foreground">
+        <CardFooter className="px-4 pb-4 flex items-center justify-between gap-2 text-xs text-muted-foreground">
           <span>{date}</span>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             {tagList.length > 0 && (
-              <span>{tagList[0]}{tagList.length > 1 ? ` +${tagList.length - 1}` : ""}</span>
+              <span className="truncate max-w-[100px]">{tagList[0]}{tagList.length > 1 ? ` +${tagList.length - 1}` : ""}</span>
             )}
-            <span>{commentCount} 评论</span>
+            <span className="whitespace-nowrap">{commentCount} 评论</span>
           </div>
         </CardFooter>
       </Card>

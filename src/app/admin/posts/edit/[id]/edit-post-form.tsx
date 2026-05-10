@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { MarkdownEditor } from "@/components/markdown-editor"
@@ -12,6 +13,7 @@ interface Post {
   id: number
   title: string
   slug: string
+  excerpt: string
   content: string
   tags: string
   published: boolean
@@ -21,6 +23,7 @@ export function EditPostForm({ post }: { post: Post }) {
   const router = useRouter()
   const [title, setTitle] = useState(post.title)
   const [slug, setSlug] = useState(post.slug)
+  const [excerpt, setExcerpt] = useState(post.excerpt)
   const [content, setContent] = useState(post.content)
   const [tags, setTags] = useState(post.tags)
   const [published, setPublished] = useState(post.published)
@@ -33,7 +36,7 @@ export function EditPostForm({ post }: { post: Post }) {
     const res = await fetch(`/api/admin/posts/${post.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, slug, content, tags, published, excerpt: content.slice(0, 200) }),
+      body: JSON.stringify({ title, slug, content, tags, published, excerpt: excerpt || content.slice(0, 200) }),
     })
 
     if (res.ok) {
@@ -60,6 +63,10 @@ export function EditPostForm({ post }: { post: Post }) {
         <div className="space-y-2">
           <Label>标签</Label>
           <Input value={tags} onChange={(e) => setTags(e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>简介</Label>
+          <Textarea value={excerpt} onChange={(e) => setExcerpt(e.target.value)} placeholder="文章摘要，不填则自动截取正文前200字" rows={3} />
         </div>
         <div className="space-y-2">
           <Label>内容</Label>

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
 import { MarkdownEditor } from "@/components/markdown-editor"
@@ -12,6 +13,7 @@ export default function NewPostPage() {
   const router = useRouter()
   const [title, setTitle] = useState("")
   const [slug, setSlug] = useState("")
+  const [excerpt, setExcerpt] = useState("")
   const [content, setContent] = useState("")
   const [tags, setTags] = useState("")
   const [published, setPublished] = useState(false)
@@ -28,7 +30,7 @@ export default function NewPostPage() {
     const res = await fetch("/api/admin/posts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, slug, content, tags, published, excerpt: content.slice(0, 200) }),
+      body: JSON.stringify({ title, slug, content, tags, published, excerpt: excerpt || content.slice(0, 200) }),
     })
 
     if (res.ok) {
@@ -55,6 +57,10 @@ export default function NewPostPage() {
         <div className="space-y-2">
           <Label>标签（逗号分隔）</Label>
           <Input value={tags} onChange={(e) => setTags(e.target.value)} placeholder="技术,生活,随笔" />
+        </div>
+        <div className="space-y-2">
+          <Label>简介</Label>
+          <Textarea value={excerpt} onChange={(e) => setExcerpt(e.target.value)} placeholder="文章摘要，不填则自动截取正文前200字" rows={3} />
         </div>
         <div className="space-y-2">
           <Label>内容（Markdown）</Label>
