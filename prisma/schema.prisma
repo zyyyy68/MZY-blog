@@ -11,3 +11,40 @@ generator client {
 datasource db {
   provider = "sqlite"
 }
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Post {
+  id         Int       @id @default(autoincrement())
+  title      String
+  slug       String    @unique
+  content    String
+  excerpt    String
+  coverImage String?
+  published  Boolean   @default(false)
+  tags       String    @default("")
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  comments   Comment[]
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  postId    Int
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author    String
+  email     String?
+  content   String
+  approved  Boolean   @default(false)
+  parentId  Int?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
