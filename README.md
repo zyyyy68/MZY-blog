@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MZY Blog
 
-## Getting Started
+基于 Next.js 16 全栈的个人博客系统，支持文章展示、评论系统和后台管理。
 
-First, run the development server:
+## 技术栈
+
+| 项目 | 选择 |
+|------|------|
+| 框架 | Next.js 16 (App Router + Turbopack) |
+| 数据库 | MySQL 8.0 (Docker) |
+| ORM | Prisma 7 |
+| 样式 | Tailwind CSS v4 + shadcn/ui |
+| 认证 | NextAuth.js v4 (Credentials + JWT) |
+| Markdown | react-markdown + remark-gfm + rehype-highlight |
+| 主题 | next-themes (亮色/暗色) |
+
+## 快速开始
+
+### 前置要求
+
+- Node.js >= 20
+- Docker
+
+### 启动开发环境
 
 ```bash
+# 启动 MySQL 容器
+docker compose up -d
+
+# 安装依赖
+npm install
+
+# 初始化数据库
+npx prisma migrate dev --name init
+
+# 创建管理员账号
+npx prisma db seed
+
+# 启动开发服务器
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+访问 http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 管理员登录
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+访问 `/admin/login`，使用种子账号登录：
 
-## Learn More
+- 邮箱：`210701544@qq.com`
+- 密码：`Mzy0368.`
 
-To learn more about Next.js, take a look at the following resources:
+## 功能
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **前台**：文章列表、文章详情（Markdown 渲染）、标签筛选、评论、关于页
+- **后台**：仪表盘、文章 CRUD（Markdown 编辑器）、评论审核、账号设置、密码管理
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 项目结构
 
-## Deploy on Vercel
+```
+my-blog/
+├── docker-compose.yml        # MySQL 8.0 容器
+├── prisma/                   # 数据库模型 & 迁移
+├── src/
+│   ├── app/                  # Next.js App Router (页面 & API)
+│   │   ├── admin/            # 后台管理页面
+│   │   ├── posts/            # 文章详情
+│   │   ├── tags/             # 标签筛选
+│   │   └── api/              # RESTful API
+│   ├── components/           # 组件 (shadcn/ui + 自定义)
+│   ├── lib/                  # 工具库 (Prisma, NextAuth)
+│   └── generated/prisma/     # Prisma 生成代码
+└── next.config.ts            # Next.js 配置
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 路径 | 方法 | 说明 |
+|------|------|------|
+| `/api/posts` | GET | 公开文章列表 |
+| `/api/posts/[slug]` | GET | 文章详情 |
+| `/api/posts/[slug]/comments` | GET/POST | 评论 |
+| `/api/admin/posts` | GET/POST | 管理文章 |
+| `/api/admin/comments` | GET | 管理评论 |
+| `/api/admin/stats` | GET | 仪表盘统计 |
