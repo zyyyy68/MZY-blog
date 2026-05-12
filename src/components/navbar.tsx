@@ -2,27 +2,30 @@
 
 import { Suspense } from "react"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
-import { ThemeToggle } from "./theme-toggle"
+import { useSearchParams, usePathname } from "next/navigation"
 
 function TabLinks() {
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const activeTab = searchParams.get("tab") || "about"
+
+  const links = [
+    { href: "/?tab=posts", label: "文章", active: activeTab === "posts" },
+    { href: "/tags", label: "标签", active: pathname.startsWith("/tags") },
+    { href: "/about", label: "关于", active: pathname === "/about" },
+  ]
 
   return (
     <>
-      <Link
-        href="/"
-        className={`text-sm transition-colors ${activeTab === "about" ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"}`}
-      >
-        关于
-      </Link>
-      <Link
-        href="/?tab=posts"
-        className={`text-sm transition-colors ${activeTab === "posts" ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"}`}
-      >
-        文章
-      </Link>
+      {links.map((link) => (
+        <Link
+          key={link.href}
+          href={link.href}
+          className={`text-sm transition-colors ${link.active ? "text-foreground font-medium" : "text-muted-foreground hover:text-foreground"}`}
+        >
+          {link.label}
+        </Link>
+      ))}
     </>
   )
 }
@@ -37,13 +40,13 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           <Suspense fallback={
             <>
-              <Link href="/" className="text-sm text-muted-foreground">关于</Link>
               <Link href="/?tab=posts" className="text-sm text-muted-foreground">文章</Link>
+              <Link href="/tags" className="text-sm text-muted-foreground">标签</Link>
+              <Link href="/about" className="text-sm text-muted-foreground">关于</Link>
             </>
           }>
             <TabLinks />
           </Suspense>
-          <ThemeToggle />
         </div>
       </div>
     </nav>

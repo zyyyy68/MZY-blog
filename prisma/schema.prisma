@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
 }
 
 model User {
@@ -26,8 +26,8 @@ model Post {
   id         Int       @id @default(autoincrement())
   title      String
   slug       String    @unique
-  content    String
-  excerpt    String
+  content    String    @db.Text
+  excerpt    String    @db.Text
   coverImage String?
   published  Boolean   @default(false)
   tags       String    @default("")
@@ -42,7 +42,7 @@ model Comment {
   post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   author    String
   email     String?
-  content   String
+  content   String    @db.Text
   approved  Boolean   @default(false)
   parentId  Int?
   parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])

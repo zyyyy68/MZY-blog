@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/navbar";
 import SessionProvider from "@/components/session-provider";
 
@@ -15,18 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html lang="zh-CN">
       <body className="min-h-full flex flex-col font-sans antialiased">
         <SessionProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <Navbar />
-            <main className="flex-1">{children}</main>
-          </ThemeProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
         </SessionProvider>
       </body>
     </html>
