@@ -12,7 +12,7 @@
 | 样式 | Tailwind CSS v4 + shadcn/ui |
 | 认证 | NextAuth.js v4 (Credentials + JWT) |
 | Markdown | react-markdown + remark-gfm + rehype-highlight |
-| 主题 | next-themes (亮色/暗色) |
+| 主题 | CSS 变量 (亮色) |
 
 ## 快速开始
 
